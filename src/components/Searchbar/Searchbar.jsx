@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
+import { BiSearch } from "react-icons/bi";
+import { IconContext } from "react-icons";
 import './Searchbar.css'
 
 const INITIAL_STATE = {
@@ -9,13 +12,13 @@ class Searchbar extends Component {
   state = { ...INITIAL_STATE };
   
   onInputChange = e => {    
-    this.setState({ search: e.currentTarget.value.toLowerCase() });
+    this.setState({ search: e.currentTarget.value});
   }
   
   onFormSubmit = e => {
     e.preventDefault();
     
-    this.props.onSubmit(this.state.search);
+    this.props.onSubmit(this.state.search.toLocaleLowerCase());
     
     this.setState({ ...INITIAL_STATE });
   };
@@ -23,9 +26,12 @@ class Searchbar extends Component {
   render() { 
     return (
       <header className="Searchbar">
-        <form className="SearchForm" onSubmit={this.onFormSubmit}>          
+        <form className="SearchForm" onSubmit={this.onFormSubmit}>
           <button className="SearchForm-button" type="submit">
-            <span>Search</span>
+            <IconContext.Provider value={{className: "Search-icon" }}>
+              <BiSearch />
+            </IconContext.Provider>
+            
           </button>
 
           <label className="SearchForm-button-label">
@@ -35,13 +41,17 @@ class Searchbar extends Component {
               name='search'
               placeholder="Search images and photos"
               value={this.state.search}
-              onChange={this.onInputChange}  
+              onChange={this.onInputChange}
             />
           </label>
         </form>
       </header>
     );
   };
+};
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default Searchbar;

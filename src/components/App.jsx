@@ -76,7 +76,7 @@ class App extends Component {
         <ImageGallery images={images} onClick={ this.onImageClick} />
         
         {status === 'loading' && <Loader />}
-        
+     
         {error !== null && <NotFound message={error} />}
         
         {status === 'resolved' && images.length ===0 && <NotFound message={`There aren’t any images with the name: ${searchImage}`} /> }
